@@ -1,0 +1,10 @@
+github.com/iangudger/binary v0.0.0-20200628043349-fe17aba08798 h1:3xE+z2DRjE8rRgSoQgN0wDoFM1n/AE0WDhmracZY26I=
+github.com/iangudger/binary v0.0.0-20200628043349-fe17aba08798/go.mod h1:WW19d0g3aBycyBceGluaAC7bf3awGlpE2KXYETA7Z54=
+github.com/iangudger/pcap v0.0.0-20200628221210-2b74840a3779 h1:KNnlEFp/OBtzGZXBE/AJVKAsDztYKY88WdTRcLlQE0U=
+github.com/iangudger/pcap v0.0.0-20200628221210-2b74840a3779/go.mod h1:BPKtIvWGDyILeA2QAWDKJ29+CoombBX0A4K6FIlcGGM=
+golang.org/x/sys v0.16.0 h1:xWw16ngr6ZMtmxDyKyIgsE93KNKz5HKmMa3b8ALHidU=
+golang.org/x/sys v0.16.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
+golang.org/x/time v0.5.0 h1:o7cqy6amK/52YcAKIPlM3a+Fpj35zvRj2TP+e1xFSfk=
+golang.org/x/time v0.5.0/go.mod h1:3BpzKBy/shNhVucY/MWOyx10tF3SFh9QdLuxbVysPQM=
+gvisor.dev/gvisor v0.0.0-20240202043348-1d352730534f h1:uYvWJpN99RkOkQU2wsmpijuv1PqRM9ZGQuNw2IXS6GQ=
+gvisor.dev/gvisor v0.0.0-20240202043348-1d352730534f/go.mod h1:YcCCAniKhCIGGvWxOobcre6euvNQON7nZCtMcVYO9rA=
