@@ -22,7 +22,7 @@ import (
 )
 
 func main() {
-	iface := flag.String("i", "lo", "Interface to read packets from.")
+	iface := flag.String("i", "any", "Interface to read packets from.")
 	outpath := flag.String("out", "", "Path to output file in pcap format. (Default is a randomly generated directory in /tmp)")
 	maxLen := flag.Uint("len", 65536, "Max packet length.")
 	helpShort := flag.Bool("h", false, "Print usage.")
@@ -56,12 +56,20 @@ func main() {
 		log.Fatalln("writePCAPHeader:", err)
 	}
 
-	ifc, err := net.InterfaceByName(*iface)
-	if err != nil {
-		log.Fatalf("net.InterfaceByName(%q): %v", *iface, err)
+	var deviceIndex int
+
+	if *iface == "any" {
+		// Zero means from all interfaces.
+		deviceIndex = 0
+		log.Println("Capturing from all interfaces")
+	} else {
+		ifc, err := net.InterfaceByName(*iface)
+		if err != nil {
+			log.Fatalf("net.InterfaceByName(%q): %v", *iface, err)
+		}
+		deviceIndex = ifc.Index
+		log.Printf("Capturing interface #%d (%s)", deviceIndex, *iface)
 	}
-	deviceIndex := ifc.Index
-	log.Printf("Capturing interface #%d (%s)", deviceIndex, *iface)
 
 	fd, err := unix.Socket(unix.AF_PACKET, unix.SOCK_RAW, int(hostToNet(unix.ETH_P_ALL)))
 	if err != nil {

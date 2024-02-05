@@ -15,12 +15,12 @@ $ $(go env GOPATH)/bin/tcpdump -h
   -help
     	Print usage.
   -i string
-    	Interface to read packets from. (default "lo")
+    	Interface to read packets from. (default "any")
   -len uint
     	Max packet length. (default 65536)
   -out string
     	Path to output file in pcap format. (Default is a randomly generated directory in /tmp)
 $ sudo $(go env GOPATH)/bin/tcpdump
-2024/02/02 08:07:01 Saving capture to: /tmp/2287002912/dump.pcap
-2024/02/02 08:07:01 Capturing interface #1 (lo)
+2024/02/05 09:48:45 Saving capture to: /tmp/3966175455/dump.pcap
+2024/02/05 09:48:45 Capturing from all interfaces
 ```
