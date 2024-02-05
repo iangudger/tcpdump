@@ -4,6 +4,7 @@
 package main
 
 import (
+	"compress/gzip"
 	"flag"
 	"fmt"
 	"io"
@@ -27,6 +28,7 @@ func main() {
 	maxLen := flag.Uint("len", 65536, "Max packet length.")
 	helpShort := flag.Bool("h", false, "Print usage.")
 	helpLong := flag.Bool("help", false, "Print usage.")
+	enableGZIP := flag.Bool("gzip", false, "Compress output with gzip compression.")
 	flag.Parse()
 
 	if *helpShort || *helpLong {
@@ -44,6 +46,9 @@ func main() {
 			log.Fatalln("os.MkdirTemp:", err)
 		}
 		*outpath = filepath.Join(d, "dump.pcap")
+		if *enableGZIP {
+			*outpath += ".gz"
+		}
 		log.Println("Saving capture to:", *outpath)
 	}
 	f, err := os.Create(*outpath)
@@ -52,7 +57,14 @@ func main() {
 	}
 	defer f.Close()
 
-	if err := writePCAPHeader(f, *maxLen); err != nil {
+	out := io.Writer(f)
+	if *enableGZIP {
+		w := gzip.NewWriter(out)
+		defer w.Close()
+		out = w
+	}
+
+	if err := writePCAPHeader(out, *maxLen); err != nil {
 		log.Fatalln("writePCAPHeader:", err)
 	}
 
@@ -133,11 +145,11 @@ func main() {
 		if ph.IncludedLength > uint32(len(packetBuf)) {
 			ph.IncludedLength = uint32(len(packetBuf))
 		}
-		if _, err := f.Write(binary.Marshal(packetHeaderBuf, binary.LittleEndian, &ph)); err != nil {
+		if _, err := out.Write(binary.Marshal(packetHeaderBuf, binary.LittleEndian, &ph)); err != nil {
 			log.Println("Write(PacketHeader):", err)
 			return
 		}
-		if _, err := f.Write(packetBuf[:ph.IncludedLength]); err != nil {
+		if _, err := out.Write(packetBuf[:ph.IncludedLength]); err != nil {
 			log.Println("Write(packet):", err)
 			return
 		}
