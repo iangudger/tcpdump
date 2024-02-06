@@ -1,0 +1,11 @@
+project_name: tcpdump
+
+env:
+  - CGO_ENABLED=0
+
+builds:
+  - id: tcpdump
+    goos:
+      - linux
+    goarch:
+      - amd64
